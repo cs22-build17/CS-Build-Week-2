@@ -5,7 +5,12 @@ Created on Mon Nov 18 19:23:27 2019
 @author: pablo
 """
 
+#####TODO#####
 #endpoints (bc/mine, /last_proof)
+
 #request
+
 #blockchain
+
 #token
+##############

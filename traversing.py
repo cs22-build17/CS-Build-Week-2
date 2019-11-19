@@ -33,6 +33,8 @@ sale = "https://lambda-treasure-hunt.herokuapp.com/api/adv/sell/"
 examineItem = "https://lambda-treasure-hunt.herokuapp.com/api/adv/examine/"
 
 
+
+#####TODO#####
 #json object that contains room information
 
 #inplement graph traversal and building
@@ -44,3 +46,4 @@ examineItem = "https://lambda-treasure-hunt.herokuapp.com/api/adv/examine/"
 #account cooldown time.
 
 #request to the server
+##############
