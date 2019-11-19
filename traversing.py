@@ -25,11 +25,11 @@ class Stack():
 token = "Token "
 
 # api-endpoint
-init = "https://lambda-treasure-hunt.herokuapp.com/api/adv/init/"
-move = "https://lambda-treasure-hunt.herokuapp.com/api/adv/move/"
-take = "https://lambda-treasure-hunt.herokuapp.com/api/adv/take/"
-changeName = "https://lambda-treasure-hunt.herokuapp.com/api/adv/change_name/"
-sale = "https://lambda-treasure-hunt.herokuapp.com/api/adv/sell/"
+init        = "https://lambda-treasure-hunt.herokuapp.com/api/adv/init/"
+move        = "https://lambda-treasure-hunt.herokuapp.com/api/adv/move/"
+take        = "https://lambda-treasure-hunt.herokuapp.com/api/adv/take/"
+changeName  = "https://lambda-treasure-hunt.herokuapp.com/api/adv/change_name/"
+sale        = "https://lambda-treasure-hunt.herokuapp.com/api/adv/sell/"
 examineItem = "https://lambda-treasure-hunt.herokuapp.com/api/adv/examine/"
 
 
