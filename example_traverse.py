@@ -19,11 +19,13 @@ def traverseMap():
     description = init_data['description']
     coordinates = init_data['coordinates']
     exits = init_data['exits']
-    print(f"Here is the room we're currently in..... {current_room} {description} {coordinates} {exits}")
+    print(f"Here is the room we're currently in..... {room_id}")
 
-    move_yo = {'direction': f"Token 7922ffc0cc5d060b72e31aa06131cddc3b7775f7"}
+    move_yo = {"direction": "s"}
     # {"direction":"s", "next_room_id": "0"}
     move_response = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=headers, data=move_yo)
+    # move_response = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', {"direction": "s"})
+    # move_response = requests.post(url=move, headers={"Authorization": token}, json={'name': f'{move}'})
     print(f"this is our move response..... {move_response}")
 
     # time.sleep(init_data['cooldown'])
