@@ -4,43 +4,46 @@ import time
 
 
 def traverseMap():
-
+    
     headers = {
-        'Authorization': f"Token 7922ffc0cc5d060b72e31aa06131cddc3b7775f7",
+        'Authorization': f"Token 2fc47453e51b1846650157a33637a2dae7c8575f",
         'Content-Type': 'application/json',
     }
-
-    init_response = requests.get(
-        'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/', headers=headers)
+    
+    init_response = requests.get('https://lambda-treasure-hunt.herokuapp.com/api/adv/init/', headers=headers)
     init_data = init_response.json()
-
-    room_id = init_data['room_id']
+    time.sleep(2)
     current_room = init_data['title']
-    description = init_data['description']
+    room_id = init_data['room_id']
+    cd = init_data['cooldown']
     coordinates = init_data['coordinates']
-    exits = init_data['exits']
-    print(f"Here is the room we're currently in..... {room_id}")
+    room_exits = init_data['exits']
+    print(f"Room ID:{room_id}, Exits:{room_exits}, Coordinates:{coordinates}, Cool Down:{cd}")
+    move = {"direction":"n"}
+    move_response = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=headers, json=move)
+    time.sleep(16)
+    # json_response = move_response.json()
+    # move_data = json_response['data']
+    # content_data = json_response['headers']['Content-Type']
+    # move_data = move_response.json()
+    # print(f"this is our move response... {move_response}")
+    print(move_response)
+    # print(move_data)
+    # print(content_data)
+    init_response = requests.get('https://lambda-treasure-hunt.herokuapp.com/api/adv/init/', headers=headers)
+    init_data = init_response.json()
+    time.sleep(2)
+    room_id2 = init_data['room_id']
+    print(f"Room ID:{room_id2}")    
+    #visited = {}
 
-    move_yo = {"direction": "s"}
-    # {"direction":"s", "next_room_id": "0"}
-    move_response = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=headers, data=move_yo)
-    # move_response = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', {"direction": "s"})
-    # move_response = requests.post(url=move, headers={"Authorization": token}, json={'name': f'{move}'})
-    print(f"this is our move response..... {move_response}")
-
-    # time.sleep(init_data['cooldown'])
-    # cool = init_data['cooldown']
-    # print(cool)
-
-    visited = {}
-
-    visited[room_id] = exits
+    #visited[room_id] = exits
 
     # print(visited)
 
-    path = []
-    reversed_dir = {'n':'s', 's':'n', 'e':'w', 'w':'e'}
-    traversalPath = []
+    #path = []
+    #reversed_dir = {'n':'s', 's':'n', 'e':'w', 'w':'e'}
+    #traversalPath = []
 
 
     # while len(visited) < 500:
