@@ -34,7 +34,12 @@ def traverseMap():
     init_data = init_response.json()
     time.sleep(2)
     room_id2 = init_data['room_id']
-    print(f"Room ID:{room_id2}")    
+    print(f"Room ID:{room_id2}") 
+    
+
+    
+    
+    
     #visited = {}
 
     #visited[room_id] = exits
