@@ -3,7 +3,7 @@ import time
 
 def traverseMap():
     headers = {
-        'Authorization': f"Token 590ad42a7fa794202fb1f779d78cd5739ae256a1",
+        'Authorization': f"Token <insert token here>",
         'Content-Type': 'application/json',
     }
     # init_response = requests.get(
