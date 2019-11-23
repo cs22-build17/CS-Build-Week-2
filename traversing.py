@@ -23,11 +23,13 @@ def traverseMap():
     print('initial room id', room_id)
     cd = init_data['cooldown']
     room_exits = init_data['exits']
-    print('init room exits', room_exits)
     unused_exits[room_id] = room_exits
+
+    world_map[room_id] = {}
     for exit in room_exits: 
         world_map[room_id][exit] = "?"
 
+    print('initial world map', world_map)
     print('cd', cd)
     time.sleep(cd)
 
@@ -55,8 +57,9 @@ def traverseMap():
             previous_dir = backtrack_path.pop()
             direct['direction'] = str(previous_dir)
             prev_room_id = room_id
-            print('previous room id:', prev_room_id)
-            print("MOVING...", previous_dir)
+            print('previous room id', prev_room_id)
+            print('MOVING...', previous_dir)
+            print('current room id', room_id)
             move_response = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=headers, json=direct)
             json_response = move_response.json()
             room_id = json_response['room_id']
@@ -78,19 +81,19 @@ def traverseMap():
         room_title = json_response['title']
         room_exits = json_response['exits']
         # print('new room exits', room_exits)
-        # print('new room id', room_id)
+        print('previous room id', prev_room_id)
+        print('MOVING...', move)
+        print('current room id', room_id)
         # print('room title', room_title)
-        # print('prev room id', prev_room_id)
 
         world_map[room_id] = {}
         for exit in room_exits:
             world_map[room_id][exit] = "?"
 
         world_map[room_id][reversed_dir[move]] = prev_room_id
+        world_map[prev_room_id][move] = room_id
 
-        new_dict_entry[move] = room_id
-        world_map[prev_room_id] = new_dict_entry
-
+        print('new world map', world_map)
         cool_down = json_response['cooldown']
         time.sleep(cool_down)
 
