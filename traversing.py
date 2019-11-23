@@ -12,8 +12,6 @@ def traverseMap():
     backtrack_path = []
     reversed_dir = {'n':'s', 's':'n', 'e':'w', 'w':'e'}
     direct = {}
-    new_dict_entry = {}
-    prev_dict_entry = {}
 
     init_response = requests.get(
         'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/', headers=headers)
@@ -25,18 +23,14 @@ def traverseMap():
     print('initial room id', room_id)
     cd = init_data['cooldown']
     room_exits = init_data['exits']
+    print('init room exits', room_exits)
     unused_exits[room_id] = room_exits
     for exit in room_exits: 
-        new_dict_entry[exit] = "?"
-        print('init new dict', new_dict_entry)
-        world_map[room_id] = new_dict_entry
-    print('init map', world_map)
-    new_dict_entry.clear()
-    print('cleared', new_dict_entry)
-    # print(init_data)
+        world_map[room_id][exit] = "?"
+
     print('cd', cd)
     time.sleep(cd)
-    # print(world_map)
+
 
 #DEBUGGING BLOCK BELOW
     # direct = {'direction':'s'}
@@ -68,79 +62,57 @@ def traverseMap():
             room_id = json_response['room_id']
             room_exits = json_response['exits']
             room_title = json_response['title']
-            print('new room id', room_id)
-            # print('room title', room_title)
+            print('backtracked: room id', room_id)
+            print('backtracked: room title', room_title)
             cool_down = json_response['cooldown']
             time.sleep(cool_down)
-            # if room_title == "Pirate Ry's":
-            #     print("pirate rys is:", room_id)
-            #     break
 
         move = unused_exits[room_id].pop(0)
         direct['direction'] = str(move)
         backtrack_path.append(reversed_dir[move])
         prev_room_id = room_id
-        print("MOVING...", move)
+        # print("MOVING...", move)
         move_response = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=headers, json=direct)
         json_response = move_response.json()
         room_id = json_response['room_id']
         room_title = json_response['title']
         room_exits = json_response['exits']
-        print('new room id', room_id)
-        print('room title', room_title)
-        print('prev room id', prev_room_id)
-        # print(str(move))
-        # world_map[prev_room_id][str(move)] = room_id
-        for room in world_map:
-            if room == room_id:
-                for exit in room_exits: 
-                    # if new_dict_entry[exit] is None:
-                    new_dict_entry[exit] = "?"
-                    print('new dict entry', new_dict_entry)
-                    # world_map[room_id] = new_dict_entry
-                    print('loop world map', world_map)
-        new_dict_entry[reversed_dir[move]] = prev_room_id
-        print('reversed move dict', new_dict_entry)
-        world_map[room_id] = new_dict_entry
-        # print('after loop map', world_map)
-        # new_dict_entry.clear()
-        print('cleared2', new_dict_entry)
+        # print('new room exits', room_exits)
+        # print('new room id', room_id)
+        # print('room title', room_title)
+        # print('prev room id', prev_room_id)
+
+        world_map[room_id] = {}
+        for exit in room_exits:
+            world_map[room_id][exit] = "?"
+
+        world_map[room_id][reversed_dir[move]] = prev_room_id
+
         new_dict_entry[move] = room_id
         world_map[prev_room_id] = new_dict_entry
-        # new_dict_entry.clear()
-        print('last map', world_map)
-        # prev_dict_entry[move] = room_id
-        # world_map[prev_room_id][move] = old_room_id
-        # print('new world map:', world_map)
+
         cool_down = json_response['cooldown']
         time.sleep(cool_down)
-        # if room_title == "Pirate Ry's":
-        #     print("pirate rys is:", room_id)
-        #     break
+
 
 traverseMap()
 
-# token = "Token "
+"""
+TODO:
+STORE THE WORLD MAP TO A TEXT FILE
 
-# api-endpoint
-# init        = "https://lambda-treasure-hunt.herokuapp.com/api/adv/init/"
-# move        = "https://lambda-treasure-hunt.herokuapp.com/api/adv/move/"
-# take        = "https://lambda-treasure-hunt.herokuapp.com/api/adv/take/"
-# changeName  = "https://lambda-treasure-hunt.herokuapp.com/api/adv/change_name/"
-# sale        = "https://lambda-treasure-hunt.herokuapp.com/api/adv/sell/"
-# examineItem = "https://lambda-treasure-hunt.herokuapp.com/api/adv/examine/"
+store data somehow someway
+    possible solution: save data to a text file 
+        then read the saved text file with another searching file thing
+        that will spit out shortest route
 
-#####TODO#####
-#json object that contains room information
+        run the get init api find our start room
+        know our target room
+        run the BFS to find the shortest path
+        make shortest path into a textfile save it/save it as (start room)-(end room).txt
 
-#inplement graph traversal and building
+        when we have shortest path text file, communicate with lambda API
+        read path text file to API and call move endpoint for every move
 
-#account visited room path
-
-#reverse direction incase needs to go back.
-
-#account cooldown time.
-
-#request to the server
-##############
-
+    possible solution2: possibly a database?
+"""
