@@ -33,20 +33,6 @@ def traverseMap():
     print('cd', cd)
     time.sleep(cd)
 
-
-#DEBUGGING BLOCK BELOW
-    # direct = {'direction':'s'}
-    # print(unused_exits)
-    # move = unused_exits[room_id].pop(0)
-    # direct['direction'] = str(move)
-    # print('move', move)
-    # move_response = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=headers, json=direct)
-    # json_response = move_response.json()
-    # room_id = json_response['room_id']
-    # cool_down = json_response['cooldown']
-    # print('new room id', room_id)
-    # time.sleep(cool_down + 1)
-
     while len(unused_exits) < 499:
         if room_id not in unused_exits:
             unused_exits[room_id] = room_exits
@@ -93,12 +79,33 @@ def traverseMap():
         world_map[room_id][reversed_dir[move]] = prev_room_id
         world_map[prev_room_id][move] = room_id
 
-        print('new world map', world_map)
+        # print('new world map', world_map)
         cool_down = json_response['cooldown']
         time.sleep(cool_down)
 
+    f = open("word_map_data.txt","w+")
+
+    f.write(f"{world_map}")
+
+    f.close() 
+
+
+#DEBUGGING BLOCK BELOW
+    # direct = {'direction':'s'}
+    # print(unused_exits)
+    # move = unused_exits[room_id].pop(0)
+    # direct['direction'] = str(move)
+    # print('move', move)
+    # move_response = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', headers=headers, json=direct)
+    # json_response = move_response.json()
+    # room_id = json_response['room_id']
+    # cool_down = json_response['cooldown']
+    # print('new room id', room_id)
+    # time.sleep(cool_down + 1)
 
 traverseMap()
+
+
 
 """
 TODO:
