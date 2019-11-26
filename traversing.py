@@ -112,7 +112,7 @@ TODO:
 STORE THE WORLD MAP TO A TEXT FILE
 
 store data somehow someway
-    possible solution: save data to a text file 
+    possible solution1: save data to a text file 
         then read the saved text file with another searching file thing
         that will spit out shortest route
 
