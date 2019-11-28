@@ -3,6 +3,16 @@ from stack_and_queue import Queue
 
 import json
 
+f = open("test.txt", "r")
+if f.mode == 'r':
+    contents = f.read()
+f.close()
+# json_acceptable_string = contents.replace("'", "\"")
+# print('json accept', json_acceptable_string)
+# mapDict = json.loads(json_acceptable_string) 
+mapDict = dict(contents)
+print(mapDict)
+
 # with open('map.txt') as json_file:
 #     data = json.load(json_file)
 #     for p in data['1']:
@@ -36,6 +46,10 @@ import json
 #     return None
 
 # shortest_path(s[0], s[15])
+
+
+
+
 
 # def bfs(self, starting_vertex, destination_vertex):
 #     """
